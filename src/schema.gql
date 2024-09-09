@@ -1,0 +1,273 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type FileToProject {
+  projectID: ID!
+  fileID: ID!
+  type: String!
+  version: Int!
+  deletedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type FileToProjectDeleteResponse {
+  projectID: ID
+  fileID: ID
+  type: String
+  version: Int
+  deletedAt: DateTime
+}
+
+type FileToProjectEdge {
+  """The node containing the FileToProject"""
+  node: FileToProject!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+"""Cursor for paging through collections"""
+scalar ConnectionCursor
+
+type PageInfo {
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+
+  """The cursor of the first returned record."""
+  startCursor: ConnectionCursor
+
+  """The cursor of the last returned record."""
+  endCursor: ConnectionCursor
+}
+
+type FileToProjectConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [FileToProjectEdge!]!
+}
+
+type File {
+  id: ID!
+  name: String!
+  deletedAt: DateTime
+  toProjects(
+    """Specify to filter the records returned."""
+    filter: FileToProjectFilter! = {}
+  ): [FileToProject!]!
+}
+
+input FileToProjectFilter {
+  and: [FileToProjectFilter!]
+  or: [FileToProjectFilter!]
+  projectID: IdFilterComparison
+  type: StringFieldComparison
+}
+
+input IdFilterComparison {
+  eq: ID
+  in: [ID!]
+}
+
+input StringFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: String
+  neq: String
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  like: String
+  notLike: String
+  iLike: String
+  notILike: String
+  in: [String!]
+  notIn: [String!]
+}
+
+type FileDeleteResponse {
+  id: ID
+  name: String
+  deletedAt: DateTime
+}
+
+type FileEdge {
+  """The node containing the File"""
+  node: File!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+type FileConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [FileEdge!]!
+}
+
+type Query {
+  file(
+    """The id of the record to find."""
+    id: ID!
+  ): File!
+  files(
+    """Limit or page results."""
+    paging: CursorPaging! = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: FileFilter! = {}
+
+    """Specify to sort results."""
+    sorting: [FileSort!]! = []
+  ): FileConnection!
+  fileToProject(
+    """The id of the record to find."""
+    id: ID!
+  ): FileToProject!
+  fileToProjects(
+    """Limit or page results."""
+    paging: CursorPaging! = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: FileToProjectFilter! = {}
+
+    """Specify to sort results."""
+    sorting: [FileToProjectSort!]! = []
+  ): FileToProjectConnection!
+}
+
+input CursorPaging {
+  """Paginate before opaque cursor"""
+  before: ConnectionCursor
+
+  """Paginate after opaque cursor"""
+  after: ConnectionCursor
+
+  """Paginate first"""
+  first: Int
+
+  """Paginate last"""
+  last: Int
+}
+
+input FileFilter {
+  and: [FileFilter!]
+  or: [FileFilter!]
+  name: StringFieldComparison
+  deletedAt: DateFieldComparison
+  toProjects: FileFilterFileToProjectFilter
+}
+
+input DateFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: DateTime
+  neq: DateTime
+  gt: DateTime
+  gte: DateTime
+  lt: DateTime
+  lte: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  between: DateFieldComparisonBetween
+  notBetween: DateFieldComparisonBetween
+}
+
+input DateFieldComparisonBetween {
+  lower: DateTime!
+  upper: DateTime!
+}
+
+input FileFilterFileToProjectFilter {
+  and: [FileFilterFileToProjectFilter!]
+  or: [FileFilterFileToProjectFilter!]
+  projectID: IdFilterComparison
+  type: StringFieldComparison
+}
+
+input FileSort {
+  field: FileSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum FileSortFields {
+  name
+  deletedAt
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+input FileToProjectSort {
+  field: FileToProjectSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum FileToProjectSortFields {
+  projectID
+  type
+}
+
+type Mutation {
+  createOneFile(input: CreateOneFileInput!): File!
+  deleteOneFile(input: DeleteOneFileInput!): FileDeleteResponse!
+  createOneFileToProject(input: CreateOneFileToProjectInput!): FileToProject!
+  deleteOneFileToProject(input: DeleteOneFileToProjectInput!): FileToProjectDeleteResponse!
+}
+
+input CreateOneFileInput {
+  """The record to create"""
+  file: CreateFile!
+}
+
+input CreateFile {
+  id: ID!
+  name: String!
+  deletedAt: DateTime
+}
+
+input DeleteOneFileInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input CreateOneFileToProjectInput {
+  """The record to create"""
+  fileToProject: CreateFileToProject!
+}
+
+input CreateFileToProject {
+  projectID: ID!
+  fileID: ID!
+  type: String!
+  version: Int!
+  deletedAt: DateTime
+}
+
+input DeleteOneFileToProjectInput {
+  """The id of the record to delete."""
+  id: ID!
+}
